@@ -1,0 +1,4 @@
+#!/bin/bash
+
+pwd
+find . -iname '*' -print0 | xargs -0 touch
