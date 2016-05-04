@@ -1,0 +1,28 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+"""
+Script for generating Polish REGON14 number based on REGON9
+"""
+
+import sys
+import random
+
+arg = list(sys.argv)
+arg.pop(0)
+
+w = [2, 4, 8, 5, 0, 9, 7, 3, 6, 1, 2, 4, 8]
+
+def r9to14(r9):
+    if (len(r9) != 9):
+        return r9 + ": error"
+    ran = "0000"+str(random.randint(1, 9999));
+    r14 = r9+ran[-4:]
+
+    summ = sum([int(r)*weight for (r, weight) in zip(r14, w)]) % 11
+    if (summ == 10):
+        summ = 0
+
+    return r9 + ": " + r14 + str(summ)
+
+
+print "\n".join([r9to14(x) for x in arg])
