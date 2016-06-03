@@ -1,0 +1,15 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+"""
+Script returns fielsd or json string.
+"""
+
+import sys
+import json
+
+arg = list(sys.argv)
+arg.pop(0)
+json_str = json.load(sys.stdin)
+
+print "\n".join([json.dumps(json_str[field], sort_keys=True, indent=2, separators=(',', ': ')) for field in arg])
+
