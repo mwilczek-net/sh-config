@@ -2,7 +2,7 @@
 
 
 TAB_NAME=$1
-COMMAND=$2
+COMMAND=${@:2}
 osascript \
     -e "tell application \"Terminal\"" \
     -e "tell application \"System Events\" to keystroke \"t\" using {command down}" \
