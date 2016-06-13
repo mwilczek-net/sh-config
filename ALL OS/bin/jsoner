@@ -6,10 +6,44 @@ Script returns fielsd or json string.
 
 import sys
 import json
+import re
+
+def convert_if_int(val):
+	if val[0]==u'i':
+		return int(val[1:])
+	elif re.match(u'^(\\\\)+i', val):
+		return val[1:]
+	else:
+		return val
+		
+
+def split_path(path):
+	result = list()
+	for arg in path.decode('UTF-8').split('.'):
+		append_to_previous_list = (not not result) and result[-1][-1][-1]=='.'
+
+		if not append_to_previous_list:
+			result.append(list())
+		
+		arg = arg if not (arg[-1] == '\\') else arg[:-1] + '.'
+		result[-1].append(arg)
+
+	return [convert_if_int(u''.join(x)) for x in result];
+
+
+def sget(obj, path):
+	for x in path:
+		obj = obj[x]
+	
+	return obj
+	
+
 
 arg = list(sys.argv)
 arg.pop(0)
-json_str = json.load(sys.stdin)
 
-print "\n".join([json.dumps(json_str[field], sort_keys=True, indent=2, separators=(',', ': ')) for field in arg])
+json_str = json.load(sys.stdin)
+print sget(json_str, split_path(arg.pop(0)))
+
+#print "\n".join([json.dumps(json_str[field], sort_keys=True, indent=2, separators=(',', ': ')) for field in arg])
 
