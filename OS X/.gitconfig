@@ -4,9 +4,14 @@
 	autocrlf = input
 [alias]
 	lol = log --graph --decorate --pretty=oneline --abbrev-commit
+	backup = branch --force backup
 [push]
 	default = current
 [merge]
 	tool = kdiff3
+	# tool = opendiff
 [mergetool "kdiff3"]
 	path = /Applications/kdiff3.app/Contents/MacOS/kdiff3
+[user]
+    name = null
+    email = null
