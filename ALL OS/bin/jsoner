@@ -4,9 +4,12 @@
 Script returns fielsd or json string.
 """
 
+import argparse
 import sys
 import json
 import re
+
+
 
 def convert_if_int(val):
 	if val[0]==u'i':
@@ -37,13 +40,21 @@ def sget(obj, path):
 	
 	return obj
 	
+def parseArgs():
+	parser = argparse.ArgumentParser()
+	parser.add_argument("path", help="""Path of value to be returned.
+		Separate keys with a dot (.). If key contains dot, then preceded with backslash (\\).
+		If key is int (not string containing numbers) then preced key with 'i'. If key starts with 'i' then preced it with backslash (\\).""")
+	parser.add_argument("--format", help="Return formatted json.", action="store_true")
+	parser.add_argument("--indent", help="Length of indent for formatted output. Default 2.", type=int, default="2")
+	
+	return parser.parse_args()
 
 
-arg = list(sys.argv)
-arg.pop(0)
+args = parseArgs()
 
 json_str = json.load(sys.stdin)
-print sget(json_str, split_path(arg.pop(0)))
+result = sget(json_str, split_path(args.path))
 
-#print "\n".join([json.dumps(json_str[field], sort_keys=True, indent=2, separators=(',', ': ')) for field in arg])
+print json.dumps(result, sort_keys=True, indent=args.indent, separators=(',', ': ')) if args.format else result
 
