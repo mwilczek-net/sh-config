@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Open finder in given direcotry. When file then open containing directory
+
+open_dir() {
+	if [[ -d ${1} ]]; then
+	    open ${1}
+	else
+		dirname ${1} | xargs open
+	fi
+}
+
+for name in "$@"
+do
+	open_dir $name
+done
+
