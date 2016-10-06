@@ -1,6 +1,6 @@
 #!/bin/bash
 
-command=$1
+commands="$@"
 RESULT=0
 number_re='^[0-9]+$'
 
@@ -35,32 +35,32 @@ FUNCTIONS_COMMANDS[${#FUNCTIONS_COMMANDS[@]}]='FUNCTION.GRUND_BUILD_AND_ANT_CLEA
 
 function FUNCTION.ANT {
 	echo "ant"
-	exit $?
+	return $?
 }
 
 function FUNCTION.ANT_ALL {
 	echo "ant all"
-	exit $?
+	return $?
 }
 
 function FUNCTION.ANT_CLEAN_ALL {
 	echo "ant clean all"
-	exit $?
+	return $?
 }
 
 function FUNCTION.GRUND_BUILD {
 	echo "grunt build"
-	exit $?
+	return $?
 }
 
 function FUNCTION.GRUND_BUILD_AND_ANT_ALL {
 	echo "grunt build && ant all"
-	exit $?
+	return $?
 }
 
 function FUNCTION.GRUND_BUILD_AND_ANT_CLEAN_ALL {
 	echo "grunt build && ant clean all"
-	exit $?
+	return $?
 }
 
 
@@ -80,39 +80,46 @@ done
 
 echo
 echo -n "Your choise: "
-if [ -z "$command" ]; then
-	read command
+if [ -z "$commands" ]; then
+	read commands
 else
-	echo $command
+	echo $commands
 fi
 echo
 
-if [ -z "$command" ]; then
+if [ -z "$commands" ]; then
 	echo "no command provided"
 	echo "exit"
 	echo
 	exit 0
 fi
 
-if ! [[ $command =~ $number_re ]]; then
-	echo "no valid command provided"
+RESULT=0
+for command in $commands
+do
+	if ! [[ $command =~ $number_re ]]; then
+		echo "no valid command provided"
+		echo
+		exit 1
+	fi
+
+	if ! [ "${command}" -lt "${ARRAY_LENGTH}" ]; then
+		echo "no valid command provided - to big number"
+		echo
+		exit 1
+	fi
+
+
+	echo ${FUNCTIONS_NAMES[$command]}
+	space
+	${FUNCTIONS_COMMANDS[$command]}
+	RESULT=$?
+
+
 	echo
-	exit 1
-fi
+	if [[ ! $RESULT ]]; then
+		exit $RESULT
+	fi
+done
 
-if ! [ "${command}" -lt "${ARRAY_LENGTH}" ]; then
-	echo "no valid command provided - to big number"
-	echo
-	exit 1
-fi
-
-
-echo ${FUNCTIONS_NAMES[$command]}
-space
-${FUNCTIONS_COMMANDS[$command]}
-RESULT=$?
-
-
-echo
 exit $RESULT
-
