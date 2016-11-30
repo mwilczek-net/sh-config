@@ -5,7 +5,7 @@
 [alias]
 	lol = log --graph --decorate --pretty=oneline --abbrev-commit
 	backup = branch --force backup
-	fetchcheckoutbranch = "!f() { git fetch "$3" && git checkout "$1" && git checkout -b "$2"; }; f"
+	fetch-checkout-branch = "!f() { git fetch "$3" && git checkout "$1" && git checkout -b "$2"; }; f"
 [push]
 	default = current
 [merge]
