@@ -6,6 +6,7 @@
 	lol = log --graph --decorate --pretty=oneline --abbrev-commit
 	backup = branch --force backup
 	fetch-checkout-branch = "!f() { git fetch "$3" && git checkout "$1" && git checkout -b "$2"; }; f"
+	rm-orig = "!f() { git status -s | awk '{if ($1 == \"??\") print $2}' | grep '.orig$' | xargs rm; }; f"
 [push]
 	default = current
 [merge]
