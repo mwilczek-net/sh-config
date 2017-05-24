@@ -35,7 +35,8 @@ FUNCTIONS_COMMANDS[${#FUNCTIONS_COMMANDS[@]}]='FUNCTION.GRUND_BUILD_AND_ANT_CLEA
 
 function FUNCTION.ANT {
 	echo "ant"
-	return $?
+
+	return 1
 }
 
 function FUNCTION.ANT_ALL {
@@ -88,6 +89,7 @@ fi
 echo
 
 if [ -z "$commands" ]; then
+	say "Script: no command provided! Exit!"
 	echo "no command provided"
 	echo "exit"
 	echo
@@ -116,10 +118,17 @@ do
 	RESULT=$?
 
 
-	echo
-	if [[ ! $RESULT ]]; then
+	echo "$RESULT"
+	if [ $RESULT -ne 0 ]; then
+		open -a BlinkScreen
+		say "Script: Failed! Failed! Failed!"
+		echo "Script: Failed! Failed! Failed!"
 		exit $RESULT
 	fi
 done
 
+
+open -a BlinkScreen
+say "Script: successful!"
+echo "Script: successful!"
 exit $RESULT
