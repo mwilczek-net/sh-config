@@ -131,7 +131,7 @@ do
 	RESULT=$?
 
 
-	echo "$RESULT"
+	echo
 	if [ $RESULT -ne 0 ]; then
 		communicatemessage "Script:\nFailed! Failed! Failed!" "Failed! Failed!"
 		exit $RESULT
