@@ -10,6 +10,19 @@ function space {
 	echo
 }
 
+function communicatemessage {
+	open -a BlinkScreen
+
+	if [ "$#" -eq 2 ]; then
+		echo -e $1
+		echo
+	fi
+
+	if [ "$#" -eq 2 ]; then
+		say "Script: " $2
+	fi
+}
+
 
 declare -a FUNCTIONS_NAMES
 declare -a FUNCTIONS_COMMANDS
@@ -36,7 +49,11 @@ FUNCTIONS_COMMANDS[${#FUNCTIONS_COMMANDS[@]}]='FUNCTION.GRUND_BUILD_AND_ANT_CLEA
 function FUNCTION.ANT {
 	echo "ant"
 
+	# always fail
 	return 1
+
+	# return result
+	# return $?
 }
 
 function FUNCTION.ANT_ALL {
@@ -89,10 +106,7 @@ fi
 echo
 
 if [ -z "$commands" ]; then
-	say "Script: no command provided! Exit!"
-	echo "no command provided"
-	echo "exit"
-	echo
+	communicatemessage "No command provided\nEXIT!" "No command provided! Exit!"
 	exit 0
 fi
 
@@ -100,13 +114,12 @@ RESULT=0
 for command in $commands
 do
 	if ! [[ $command =~ $number_re ]]; then
-		echo "no valid command provided"
-		echo
+		communicatemessage "No valid command provided\nEXIT!" "No valid command provided! Exit!"
 		exit 1
 	fi
 
 	if ! [ "${command}" -lt "${ARRAY_LENGTH}" ]; then
-		echo "no valid command provided - to big number"
+		communicatemessage "No valid command provided - to big number\nEXIT!" "No valid command provided! To big number! Exit!"
 		echo
 		exit 1
 	fi
@@ -120,15 +133,11 @@ do
 
 	echo "$RESULT"
 	if [ $RESULT -ne 0 ]; then
-		open -a BlinkScreen
-		say "Script: Failed! Failed! Failed!"
-		echo "Script: Failed! Failed! Failed!"
+		communicatemessage "Script:\nFailed! Failed! Failed!" "Failed! Failed!"
 		exit $RESULT
 	fi
 done
 
 
-open -a BlinkScreen
-say "Script: successful!"
-echo "Script: successful!"
+communicatemessage "Script:\nsuccessful!" "successful!"
 exit $RESULT
