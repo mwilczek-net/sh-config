@@ -44,7 +44,7 @@ do
 			COMMANDS+=('drop database `'$OPTARG'`;')
 			;;
 		"t")
-			COMMANDS+=('drop database `'$OPTARG'`; create database `'$OPTARG'`;')
+			COMMANDS+=('drop database if exists `'$OPTARG'`; create database `'$OPTARG'`;')
 			;;
 		"l")
 			COMMANDS+=('show databases;')
