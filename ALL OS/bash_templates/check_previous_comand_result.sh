@@ -6,7 +6,6 @@
 # $2 - Message
 ##
 function check-if-error {
-    set +x
     if [ $1 -ne 0 ]; then
         echo ""
         echo ""
@@ -29,7 +28,6 @@ function check-if-error {
 # $2 - Message
 ##
 function inform-if-error {
-    set +x
     if [ $1 -ne 0 ]; then
         echo ""
         echo ""
