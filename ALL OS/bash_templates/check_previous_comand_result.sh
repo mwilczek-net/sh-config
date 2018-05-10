@@ -9,11 +9,11 @@ function check-if-error {
     if [ $1 -ne 0 ]; then
         echo ""
         echo ""
-        echo "!!!!!!!!!!! ERRORR !!!!!!!!!!! ERRORR !!!!!!!!!!! ERRORR !!!!!!!!!!! ERRORR !!!!!!!!!!!"
+        echo "!!!!!!!!!!! ERROR !!!!!!!!!!! ERROR !!!!!!!!!!! ERROR !!!!!!!!!!! ERROR !!!!!!!!!!!"
         echo ""
         echo "${2}";
         echo ""
-        echo "!!!!!!!!!!! ERRORR !!!!!!!!!!! ERRORR !!!!!!!!!!! ERRORR !!!!!!!!!!! ERRORR !!!!!!!!!!!"
+        echo "!!!!!!!!!!! ERROR !!!!!!!!!!! ERROR !!!!!!!!!!! ERROR !!!!!!!!!!! ERROR !!!!!!!!!!!"
         echo ""
         echo ""
 
