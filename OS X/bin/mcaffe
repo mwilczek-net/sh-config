@@ -1,0 +1,15 @@
+#!/bin/bash
+
+case "$1" in
+	"start")
+		sudo /usr/local/McAfee/AntiMalware/VSControl startoas
+		;;
+	"stop")
+		sudo /usr/local/McAfee/AntiMalware/VSControl stopoas
+		;;
+	*)
+		echo "parameters: start|stop"
+		exit;
+		;;
+esac
+
