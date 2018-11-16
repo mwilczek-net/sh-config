@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# -bdgpstwy
+
+COW_VERSION=''
+COW_SELECT=$(( RANDOM % 9 ))
+
+case $COW_SELECT in
+	"0") COW_VERSION='';;
+	"1") COW_VERSION='-b';;
+	"2") COW_VERSION='-d';;
+	"3") COW_VERSION='-g';;
+	"4") COW_VERSION='-p';;
+	"5") COW_VERSION='-s';;
+	"6") COW_VERSION='-t';;
+	"7") COW_VERSION='-w';;
+	"8") COW_VERSION='-y';;
+esac
+
+
+cat | cowsay ${COW_VERSION} "$@"

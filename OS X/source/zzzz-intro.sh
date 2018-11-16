@@ -1,3 +1,3 @@
 #!/bin/bash
 
-fortune -a | cowsay
+fortune -a | random-cowsay
