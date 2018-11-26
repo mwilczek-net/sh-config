@@ -8,6 +8,8 @@ COW_PARAMETER_SELECT=$(( RANDOM % 9 ))
 COW_TEMPLATE=''
 COW_TEMPLATE_SELECT=$(( RANDOM % 39 ))
 
+COW_COMMAND=$(( RANDOM % 2 ))
+
 
 case $COW_PARAMETER_SELECT in
 	"0") COW_PARAMETER='';;
@@ -64,4 +66,11 @@ case $COW_TEMPLATE_SELECT in
 esac
 
 
-cat | cowsay ${COW_PARAMETER} ${COW_TEMPLATE} "$@"
+case $COW_COMMAND in
+	"0")
+		cat | cowsay ${COW_PARAMETER} ${COW_TEMPLATE} "$@"
+		;;
+	"1")
+		cat | cowthink ${COW_PARAMETER} ${COW_TEMPLATE} "$@"
+		;;
+esac
