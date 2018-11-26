@@ -27,7 +27,7 @@ case $COW_TEMPLATE_SELECT in
 	"0") COW_TEMPLATE='';;
 	"1") COW_TEMPLATE='-f blowfish';;
 	"2") COW_TEMPLATE='-f bong ';;
-	"3") COW_TEMPLATE='-f ogs';;
+	"3") COW_TEMPLATE='-f bud-frogs';;
 	"4") COW_TEMPLATE='-f bunny';;
 	"5") COW_TEMPLATE='-f cheese';;
 	"6") COW_TEMPLATE='-f cower';;
