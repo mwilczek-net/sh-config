@@ -8,8 +8,8 @@
 	fetch-checkout-branch = "!f() { git fetch "$3" && git checkout "$1" && git checkout -b "$2"; }; f"
 	fetch-rebase = "!f() { git fetch "$2" && git rebase "$1"; }; f"
 	rm-orig = "!f() { git status -s | awk '{if ($1 == \"??\") print $2}' | grep '.orig$' | xargs rm; }; f"
-	show-skip-worktree = "!f() { git ls-files -v | grep '^S'; }; f"
-	show-assume-unchanged = "!f() { git ls-files -v | grep '^h'; }; f"
+	ls-skip-worktree = "!f() { git ls-files -v | grep '^S'; }; f"
+	ls-assume-unchanged = "!f() { git ls-files -v | grep '^h'; }; f"
 [push]
 	default = current
 [merge]
