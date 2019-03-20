@@ -16,19 +16,19 @@ function skip_hook_if_config {
     SKIP_HOOK_BASH=${GIT_HOOKS_EMPTY_HOOK_SKIP}
 
     if [ "${IGNORE_COMMITED_GIT}" == "true" ]; then
-        printf "${MAGENTA}"
+        echo -e "${MAGENTA}"
         echo "--- SKIPPING due to git config"
         echo
-        printf "${RESET}"
+        echo -e "${RESET}"
 
         exit 0;
     fi
 
     if [ "${IGNORE_COMMITED_BASH}" == "true" ]; then
-        printf "${MAGENTA}"
+        echo -e "${MAGENTA}"
         echo "--- SKIPPING due to BASH variable"
         echo
-        printf "${RESET}"
+        echo -e "${RESET}"
 
         exit 0;
     fi
@@ -37,13 +37,13 @@ function skip_hook_if_config {
 function hook_body {
     problem_flag=false
     if $problem_flag; then
-        printf "${LIGHT_RED}"
+        echo -e "${LIGHT_RED}"
         echo
         echo "EMPTY HOOK problem message"
         echo
         echo "Problem details"
         echo
-        printf "${RESET}"
+        echo -e "${RESET}"
 
         exit 1;
     fi
