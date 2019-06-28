@@ -5,6 +5,7 @@
 [alias]
 	lol = log --graph --decorate --pretty=oneline --abbrev-commit
 	backup = branch --force backup
+	submodule-update = submodule update --init --recursive
 	fetch-checkout-branch = "!f() { git fetch "$3" && git checkout "$1" && git checkout -b "$2"; }; f"
 	fetch-rebase = "!f() { git fetch "$2" && git rebase "$1"; }; f"
 	rm-orig = "!f() { git status -s | awk '{if ($1 == \"??\") print $2}' | grep '.orig$' | xargs rm; }; f"
@@ -17,6 +18,10 @@
 	# tool = opendiff
 [mergetool "kdiff3"]
 	path = /Applications/kdiff3.app/Contents/MacOS/kdiff3
+[mergetool "meld"]
+	trustExitCode = true
+	cmd = open -W -n -a Meld --args --auto-merge \"$(git rev-parse --show-toplevel)/${LOCAL}\" \"$(git rev-parse --show-toplevel)/${BASE}\" \"$(git rev-parse --show-toplevel)/${REMOTE}\" --output=\"$(git rev-parse --show-toplevel)/${MERGED}\"
+
 [user]
     name = null
     email = null
