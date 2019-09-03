@@ -2,11 +2,17 @@
 
 # -bdgpstwy
 
+function cow_templates {
+	cowsay -l | grep -v 'Cow files in' | xargs -n 1 echo "-f "
+	echo ""
+}
+
 COW_PARAMETER=''
 COW_PARAMETER_SELECT=$(( RANDOM % 9 ))
 
-COW_TEMPLATE=''
-COW_TEMPLATE_SELECT=$(( RANDOM % 39 ))
+
+COW_TEMPLATE=`cow_templates | sort -R | head -n1`
+
 
 COW_COMMAND=$(( RANDOM % 2 ))
 
@@ -21,48 +27,6 @@ case $COW_PARAMETER_SELECT in
 	"6") COW_PARAMETER='-t';;
 	"7") COW_PARAMETER='-w';;
 	"8") COW_PARAMETER='-y';;
-esac
-
-case $COW_TEMPLATE_SELECT in
-	"0") COW_TEMPLATE='';;
-	"1") COW_TEMPLATE='-f blowfish';;
-	"2") COW_TEMPLATE='-f bong ';;
-	"3") COW_TEMPLATE='-f bud-frogs';;
-	"4") COW_TEMPLATE='-f bunny';;
-	"5") COW_TEMPLATE='-f cheese';;
-	"6") COW_TEMPLATE='-f cower';;
-	"7") COW_TEMPLATE='-f dragon';;
-	"8") COW_TEMPLATE='-f dragon-and-cow';;
-	"9") COW_TEMPLATE='-f elephant';;
-	"10") COW_TEMPLATE='-f eyes';;
-	"11") COW_TEMPLATE='-f flaming-sheep';;
-	"12") COW_TEMPLATE='-f head-in';;
-	"13") COW_TEMPLATE='-f kitty';;
-	"14") COW_TEMPLATE='-f koala';;
-	"15") COW_TEMPLATE='-f luke-koala';;
-	"16") COW_TEMPLATE='-f meow';;
-	"17") COW_TEMPLATE='-f milk';;
-	"18") COW_TEMPLATE='-f moofasa';;
-	"19") COW_TEMPLATE='-f moose';;
-	"20") COW_TEMPLATE='-f mutilated';;
-	"21") COW_TEMPLATE='-f satanic';;
-	"22") COW_TEMPLATE='-f sheep';;
-	"23") COW_TEMPLATE='-f skeleton';;
-	"24") COW_TEMPLATE='-f small';;
-	"25") COW_TEMPLATE='-f sodomized';;
-	"26") COW_TEMPLATE='-f stegosaurus';;
-	"27") COW_TEMPLATE='-f stimpy';;
-	"28") COW_TEMPLATE='-f supermilker';;
-	"29") COW_TEMPLATE='-f surgery';;
-	"30") COW_TEMPLATE='-f telebears';;
-	"31") COW_TEMPLATE='-f three-eyes';;
-	"32") COW_TEMPLATE='-f turkey';;
-	"33") COW_TEMPLATE='-f turtle';;
-	"34") COW_TEMPLATE='-f tux';;
-	"35") COW_TEMPLATE='-f udder';;
-	"36") COW_TEMPLATE='-f vader';;
-	"37") COW_TEMPLATE='-f vader-koala';;
-	"38") COW_TEMPLATE='-f www';;
 esac
 
 
