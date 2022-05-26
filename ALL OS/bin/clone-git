@@ -1,0 +1,230 @@
+#!/bin/zsh
+
+# required for zparseopts
+zmodload zsh/zutil
+
+
+######################
+# Variables & CONSTS #
+######################
+
+NUMBER_REGEXP='^[0-9]+$'
+
+HOSTS_ARRAY=()
+pickedHostId=""
+pickedHostName=""
+
+REPO_ORIGINAL_URL=""
+REPO_NEW_URL=""
+
+helpFlag=""
+dryRun=""
+cloneDirectory=""
+
+
+#############
+# Functions #
+#############
+
+function parseParameters {
+  zparseopts -D -E -F - \
+        h=helpFlag -help=helpFlag \
+        d=dryRun -dryrun=dryRun \
+        D:=cloneDirectory -clonedirectory:=cloneDirectory \
+      || printHelpOnParametersError 
+  
+  cloneDirectory="${cloneDirectory/(-D =|--clonedirectory =|-D |--clonedirectory )/}"
+  REPO_ORIGINAL_URL="${1}"
+}
+
+function printHelpContent {
+cat <<EOF
+  clone-git is clonning util that helps you manage different account on the same
+  git server.
+  
+  clone-git reads configuration form "~/.ssh/config" file and lets you chose
+  host alias for particualr configuration.
+  
+  Example ssh config:
+  Host github.priv
+    HostName github.com
+    IdentityFile priv_account_identity_file.rsa
+  Host github.work
+    HostName github.com
+    IdentityfFile work_account_identity_file.rsa
+  Host project01
+    HostName github.com
+    IdentityfFile project01_account_identity_file.rsa
+  
+  To use given configuration efectivelly, there is a need for replacing repo URLs
+  during clonning to match ssh configuration, which can be done with this software.
+  For example:
+    git clone git@github.work:user/repo.git
+    or
+    clone-git git@github.com:user/repo.git
+  
+  Script can convert HTTPS URLs into SSH:
+  https://github.com/user/repo.git -> git@github.com:user/repo.git
+  
+  clone-git -h|--help
+  clone-git [-d|--dryrun] [-D|--clonedirectory <OPTIONAL_CLONNIGN_DIRECTORY>] <ORIGINAL_REPO_URL>
+  
+  -h|--help
+      Print this help.
+      
+  -d|--dryrun
+      compute repo URL based on ssh config, but only print details - no cloning
+      
+  -D|--clonedirectory <OPTIONAL_CLONNIGN_DIRECTORY>
+      optional name of a new directory to clone into
+  
+  <ORIGINAL_REPO_URL>
+      original repo URL on remote server
+
+EOF
+}
+
+function printHelpIfRequested {
+  if [ -n "${helpFlag}" ]; then
+    printHelpContent
+    exit 0;
+  fi
+  
+  if [ -z "${REPO_ORIGINAL_URL}" ]; then
+      printHelpContent
+      exit 1;
+  fi
+}
+
+function printHelpOnParametersError {
+  printHelpContent
+  exit 2
+}
+
+function readHosts {
+  cat ~/.ssh/config | grep '^Host '
+}
+
+function readHostsToArray {
+  HOSTS_ARRAY=("${(@f)$(readHosts)}");
+}
+
+function printHosts {
+  for ((i = 1; i <= $#HOSTS_ARRAY; i++)) do
+    echo "  ${i}  -  ${HOSTS_ARRAY[$i]}"
+  done;
+}
+
+function pickHost {
+  echo -n "Pick Host number (empty - clean exit): "
+  read pickedHostId
+}
+
+function validatePickedHost {
+  if [ -z "${pickedHostId}" ]; then
+    echo "No hosts selected!"
+    echo "Clean EXIT!"
+    exit 0
+  fi
+  
+  if ! [[ $pickedHostId =~ $NUMBER_REGEXP ]]; then
+    echo "No valid host selection number provided!"
+    echo "Only numbers allowed!"
+    echo "Exit with error!"
+    exit 3
+  fi
+
+  if [ "${pickedHostId}" -le "0" ]; then
+    echo "No valid host selection number provided!"
+    echo "Number too small!"
+    echo "Exit with error!"
+    exit 3
+  fi
+
+  if [ "${pickedHostId}" -gt "${#HOSTS_ARRAY}" ]; then
+    echo "No valid host selection number provided!"
+    echo "Number too big!"
+    echo "Exit with error!"
+    exit 3
+  fi
+}
+
+function setHostBasedOnId {
+  pickedHostName="${HOSTS_ARRAY[$pickedHostId]#"Host "}"
+  echo "Selected Host Name: \"${pickedHostName}\""
+}
+
+function convertHttpToSsh {
+  if ! [[ "${REPO_ORIGINAL_URL}" =~ ^https://.* ]] then;
+    return;
+  fi
+  
+  echo "Converting WEB URL: \"${REPO_ORIGINAL_URL}\""
+  
+  local removedHttpsProtocol="${REPO_ORIGINAL_URL/https:\/\//}"
+  local separateServerFromDirectory="${removedHttpsProtocol/\//:}"
+  local prefixedWIthSsh="git@${separateServerFromDirectory}"
+  
+  REPO_ORIGINAL_URL="${prefixedWIthSsh}"
+  
+  echo "Converted to SSH URL: \"${REPO_ORIGINAL_URL}\""
+}
+
+function buildNewRepoURL {
+  local begining="${REPO_ORIGINAL_URL%%@*}"
+  local ending="${REPO_ORIGINAL_URL#*:}"
+  
+  REPO_NEW_URL="${begining}@${pickedHostName}:${ending}"
+  
+  echo ""
+  echo "Old URL: ${REPO_ORIGINAL_URL}"
+  echo "New URL: ${REPO_NEW_URL}"
+  echo ""
+}
+
+function cloneGitRepository {
+  echo ""
+  echo "Cloning config:"
+  echo "  Repo URL   : ${REPO_NEW_URL}"
+  if [ -n "${cloneDirectory}" ]; then
+    echo "  Cloning to : ${cloneDirectory}"
+  fi
+  echo
+  
+  if [ -n "${dryRun}" ]; then
+    echo "Dry Run!";
+    echo "NO CLONE";
+    
+    return;
+  fi
+  
+  echo "Start cloning repo"
+  
+  if [ -z "${cloneDirectory}" ]; then
+    git clone "${REPO_NEW_URL}"
+  else
+    git clone "${REPO_NEW_URL}" "${cloneDirectory}"
+  fi
+}
+
+
+#############
+# EXECUTING #
+#############
+
+parseParameters $*
+
+printHelpIfRequested
+
+readHostsToArray
+printHosts
+pickHost
+validatePickedHost
+setHostBasedOnId
+
+convertHttpToSsh
+buildNewRepoURL
+cloneGitRepository
+
+
+
