@@ -1,8 +1,7 @@
-HISTFILESIZE=500000
 export PATH=$PATH:$HOME/bin
 
-# Execute BASH source files
-for file in $HOME/source_bash/*
+# Execute ZSH source files
+for file in $HOME/source_zsh/*
 do
   . "$file"
 done
@@ -12,4 +11,3 @@ for file in $HOME/source/*
 do
   . "$file"
 done
-

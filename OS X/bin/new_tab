@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# For paths in 'COMMAND' use ${HOME} istead of ~
 
 TAB_NAME=$1
 COMMAND=${@:2}
