@@ -1,0 +1,7 @@
+To start python3.9:
+. ./virtualenv-3.9.sh  
+
+To install required libs:
+pip install -r pip-requirements.txt
+
+
