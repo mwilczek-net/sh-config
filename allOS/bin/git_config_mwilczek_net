@@ -1,0 +1,5 @@
+#!/bin/sh
+
+git config user.name "mwilczek-net"
+git config user.email "mwilczek-net@users.noreply.github.com"
+
