@@ -3,6 +3,7 @@
 	editor = vim
 	autocrlf = input
 
+
 [alias]
 	lol = log --graph --decorate --pretty=oneline --abbrev-commit
 	log-s = log --show-signature
@@ -14,8 +15,11 @@
 	rm-orig = "!f() { git status -s | awk '{if ($1 == \"??\") print substr($0, index($0, $2))}' | grep '.orig$' | xargs -I {} rm '{}'; }; f"
 	ls-skip-worktree = "!f() { git ls-files -v | grep '^S'; }; f"
 	ls-assume-unchanged = "!f() { git ls-files -v | grep '^h'; }; f"
+	current-branch = "symbolic-ref --short HEAD"
+
 [push]
 	default = current
+
 
 [user]
 	name = null
