@@ -1,0 +1,51 @@
+#!/usr/bin/env python
+
+from datetime import datetime, timedelta
+import inspect
+
+TIME_FORMAT = "%H:%M"
+
+time_summary: timedelta = timedelta(minutes=0)
+
+
+def now_as_time() -> datetime:
+    now_time = datetime.now().time()
+    return datetime.strptime(f"{now_time.hour}:{now_time.minute}", TIME_FORMAT)
+
+
+def input_to_time(user_input: str) -> datetime:
+    if user_input.lower() == "now":
+        return now_as_time()
+    return datetime.strptime(user_input, TIME_FORMAT)
+
+
+while True:
+    start_time_raw = input("Start time (HH:MM|now): ")
+    if not start_time_raw:
+        print("No start time, ending loop")
+        break
+
+    end_time_raw = input("Ent Time (HH:MM|now): ")
+    if not end_time_raw:
+        print("No start time, ending loop")
+        break
+
+    start_time = input_to_time(start_time_raw)
+    end_time = input_to_time(end_time_raw)
+
+    time_diff: timedelta = end_time - start_time
+    time_summary += time_diff
+
+    print(
+        inspect.cleandoc(
+            f"""
+            ---------------------
+            Last Diff:
+            {time_diff}
+            ---------------------
+            TIME SUMMARY:
+            {time_summary}
+            ---------------------
+            """
+        )
+    )
