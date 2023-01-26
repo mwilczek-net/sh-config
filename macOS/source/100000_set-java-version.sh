@@ -1,6 +1,5 @@
-#!/bin/bash
-
-#. jhome
-#. jhome 1.7.0_79
-. jhome 1.8.0_73
-
+#!/bin/sh
+echo "--------------========|   Setting up Java -- BEGIN   |========--------------"
+# . jhome
+. jhome 1.8.0_221
+echo "--------------========|    Setting up Java -- END    |========--------------"
