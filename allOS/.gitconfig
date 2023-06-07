@@ -3,15 +3,15 @@
 	editor = vim
 	autocrlf = input
 
-
 [alias]
 	lol = log --graph --decorate --pretty=oneline --abbrev-commit
 	log-s = log --show-signature
 	backup = branch --force backup
-	undo = reset HEAD^ 
+	undo = reset HEAD^
 	submodule-update = submodule update --init --recursive
 	fetch-checkout-branch = "!f() { git fetch "$3" && git checkout "$1" && git checkout -b "$2"; }; f"
 	fetch-rebase = "!f() { git fetch "$2" && git rebase "$1"; }; f"
+	fetch-pull = "!f() { git fetch "$3" && git pull "$1" "$2"; }; f"
 	rm-orig = "!f() { git status -s | awk '{if ($1 == \"??\") print substr($0, index($0, $2))}' | grep '.orig$' | xargs -I {} rm '{}'; }; f"
 	ls-skip-worktree = "!f() { git ls-files -v | grep '^S'; }; f"
 	ls-assume-unchanged = "!f() { git ls-files -v | grep '^h'; }; f"
@@ -19,7 +19,6 @@
 
 [push]
 	default = current
-
 
 [user]
 	name = null
