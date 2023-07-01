@@ -1,0 +1,8 @@
+#!/bin/bash
+
+
+TAB_NAME="${1}"
+COMMAND=${@:2}
+
+gnome-terminal --tab --title="${TAB_NAME}" -- "${SHELL}" -c "$COMMAND; ${SHELL}"
+
