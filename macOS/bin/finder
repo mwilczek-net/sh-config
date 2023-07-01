@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Open finder in given direcotry. When file then open containing directory
+# Open finder in given direcotry. When file then open parent directory
 
 open_dir() {
 	if [[ -d ${1} ]]; then
