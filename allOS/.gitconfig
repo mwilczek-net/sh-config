@@ -23,3 +23,5 @@
 [user]
 	name = null
 	email = null
+[pull]
+	rebase = false
