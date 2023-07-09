@@ -12,8 +12,9 @@ apt install heif-gdk-pixbuf
 # May be neede for HEIF / HEIC thumbnails support
 # apt install heif-thumbnailer
 
-# VIM
+# Tools
 apt install vim
+apt install mc
 
 # Shell intro + fancy reporting
 apt install fortune
@@ -23,3 +24,4 @@ apt install cowsay
 
 # Sytem details
 apt install inxi
+
