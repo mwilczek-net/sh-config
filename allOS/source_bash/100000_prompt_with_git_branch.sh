@@ -19,7 +19,7 @@ function git_names {
   #   ;;
   # esac
   
-  local prompt_time="$GREEN[$WHITE\t$GREEN]"
+  local prompt_time="$GREEN[$WHITE\D{%y-%m-%d %T}$GREEN]"
   local prompt_path="$GREEN[$WHITE\w$GREEN]"
   
   # PS1="${TITLEBAR}\ # optional - change tab names
