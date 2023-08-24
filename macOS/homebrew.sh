@@ -6,3 +6,4 @@ brew install fortune
 brew install cowsay
 brew install toilet
 brew install dialog
+brew install tree
