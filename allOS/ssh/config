@@ -1,0 +1,11 @@
+Host bitbucket.org
+  IdentityFile ~/.ssh/bitbucket.org.rsa
+
+Host github.mwilczek-net
+  HostName github.com
+  IdentityFile ~/.ssh/mwilczek-net.github.rsa
+
+Host github.client01
+  HostName github.com
+  IdentityFile ~/.ssh/client01.github.rsa
+
