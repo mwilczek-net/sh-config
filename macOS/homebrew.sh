@@ -7,3 +7,6 @@ brew install cowsay
 brew install toilet
 brew install dialog
 brew install tree
+
+# brew install python-gdbm@3.9
+brew install python-gdbm@3.11
