@@ -23,5 +23,10 @@
 [user]
 	name = null
 	email = null
+
 [pull]
 	rebase = false
+
+[init]
+	defaultBranch = master
+
