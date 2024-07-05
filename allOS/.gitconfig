@@ -4,6 +4,7 @@
 	autocrlf = input
 
 [alias]
+	root = rev-parse --show-toplevel
 	lol = log --graph --decorate --pretty=oneline --abbrev-commit
 	log-s = log --show-signature
 	backup = branch --force backup
