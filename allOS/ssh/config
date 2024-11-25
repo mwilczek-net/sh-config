@@ -9,3 +9,7 @@ Host github.client01
   HostName github.com
   IdentityFile ~/.ssh/client01.github.key
 
+# Use config if commands are executed in given path
+Match host github.com exec "pwd | grep -e '^\(/Users/user/projects/organisation$\)\|\(/Users/user/projects/organisation\)'"
+  IdentityFile ~/.ssh/client01.github.key
+
