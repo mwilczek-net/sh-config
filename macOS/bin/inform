@@ -1,0 +1,13 @@
+#!/bin/bash
+
+status_code_input="${1}"
+
+function message_success {
+    say "Hooray\! Success\!"
+}
+
+function message_fail {
+    say "Oh my God\! What've just happened here?"
+}
+
+[ "${status_code_input}" -eq "0" ] && message_success || message_fail
