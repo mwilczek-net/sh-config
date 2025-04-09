@@ -1,0 +1,15 @@
+#!/bin/bash
+
+secs="${1}"
+
+if [ -z "$secs" ]; then
+   echo "Usage: $0 <seconds>"
+   exit 1
+fi
+
+while [ $secs -gt 0 ]; do
+   : $((secs--))
+   remaining_time="$(printf '%dd:%02dh:%02dm:%02ds\n' $((secs/86400)) $((secs/3600)) $((secs%3600/60)) $((secs%60)))"
+   echo -ne "${remaining_time}\033[0K\r"
+   sleep 1
+done
