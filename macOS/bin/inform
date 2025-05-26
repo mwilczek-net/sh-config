@@ -13,4 +13,5 @@ function message_fail {
 [ "${status_code_input}" -eq "0" ] && message_success || message_fail
 
 # Forward error code for transparency
-return "${status_code_input}"
+exit "${status_code_input}"
+
