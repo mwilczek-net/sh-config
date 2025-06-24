@@ -2,13 +2,18 @@
 
 status_code_input="${1}"
 
+message_title="Infrom Script"
+if [ -n "${TAB_NAME}" ]; then
+    message_title="${message_title} - ${TAB_NAME}"
+fi
+
 function message_success {
-    osascript -e 'display notification "Success 💃" with title "Infrom Script" subtitle "Script reported success ✅" sound name "Submerge"'
+    osascript -e "display notification \"Success 💃\" with title \"${message_title}\" subtitle \"Script reported success ✅\" sound name \"Submerge\""
     say "Hooray\! Success\!"
 }
 
 function message_fail {
-    osascript -e "display notification \"Error code: ${status_code_input} 😭\" with title \"Infrom Script\" subtitle \"Script reported fail ❌\" sound name \"Sonumi\""
+    osascript -e "display notification \"Error code: ${status_code_input} 😭\" with title \"${message_title}\" subtitle \"Script reported fail ❌\" sound name \"Sonumi\""
     say "Oh my God\! What've just happened here?"
 }
 
