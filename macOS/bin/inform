@@ -3,10 +3,12 @@
 status_code_input="${1}"
 
 function message_success {
+    osascript -e 'display notification "Success 💃" with title "Infrom Script" subtitle "Script reported success ✅" sound name "Submerge"'
     say "Hooray\! Success\!"
 }
 
 function message_fail {
+    osascript -e "display notification \"Error code: ${status_code_input} 😭\" with title \"Infrom Script\" subtitle \"Script reported fail ❌\" sound name \"Sonumi\""
     say "Oh my God\! What've just happened here?"
 }
 
