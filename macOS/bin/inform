@@ -8,12 +8,12 @@ if [ -n "${TAB_NAME}" ]; then
 fi
 
 function message_success {
-    osascript -e "display notification \"Success 💃\" with title \"${message_title}\" subtitle \"Script reported success ✅\" sound name \"Submerge\""
+    osascript -e "display notification \"Success 💃\" with title \"${message_title}\" subtitle \"Script reported success ✅\" sound name \"Submarine\""
     say "Hooray\! Success\!"
 }
 
 function message_fail {
-    osascript -e "display notification \"Error code: ${status_code_input} 😭\" with title \"${message_title}\" subtitle \"Script reported fail ❌\" sound name \"Sonumi\""
+    osascript -e "display notification \"Error code: ${status_code_input} 😭\" with title \"${message_title}\" subtitle \"Script reported fail ❌\" sound name \"Sosumi\""
     say "Oh my God\! What've just happened here?"
 }
 
