@@ -17,7 +17,16 @@ function message_fail {
     say "Oh my God\! What've just happened here?"
 }
 
-[ "${status_code_input}" -eq "0" ] && message_success || message_fail
+function async_message_success {
+    message_success &
+}
+
+function async_message_fail {
+    message_fail &
+}
+
+
+[ "${status_code_input}" -eq "0" ] && async_message_success || async_message_fail
 
 # Forward error code for transparency
 exit "${status_code_input}"
