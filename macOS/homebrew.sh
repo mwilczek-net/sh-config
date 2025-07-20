@@ -2,11 +2,12 @@
 
 brew --version || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-brew install fortune
-brew install cowsay
-brew install toilet
-brew install dialog
-brew install tree
+# if just isntalled, brew is not available in current context. We need to start new one
+zsh -c "brew install fortune"
+zsh -c "brew install cowsay"
+zsh -c "brew install toilet"
+zsh -c "brew install dialog"
+zsh -c "brew install tree"
 
-# brew install python-gdbm@3.9
-brew install python-gdbm@3.11
+# zsh -c "brew install python-gdbm@3.9"
+zsh -c "brew install python-gdbm@3.13"
