@@ -1,0 +1,92 @@
+#!/bin/zsh
+
+help() {
+    echo "Usage: ${0} -l <language> [-f <file.path>] [-d <dir.path>]"
+    echo "  -l language: java or python"
+    echo "  -f file path: dot-separated path, last part is filename without extension"
+    echo "  -d directory path: dot-separated path, last part is directory name"
+    echo "Example: ${0} -l python -f com.example.utils.helper"
+    echo "Example: ${0} -l java -d com.example.services"
+    exit 1
+}
+
+validate_arguments() {
+    if [[ -z "${LANGUAGE}" ]]; then
+        echo "Error: Language (-l) is required"
+        help
+    fi
+
+    if [[ -z "${FILE_PATH}" && -z "${DIR_PATH}" ]]; then
+        echo "Error: Either file path (-f) or directory path (-d) is required"
+        help
+    fi
+
+    if [[ "${LANGUAGE}" != "java" && "${LANGUAGE}" != "python" ]]; then
+        echo "Error: Unsupported language '$LANGUAGE'. Supported: java, python"
+        exit 1
+    fi
+}
+
+convert_path() {
+    echo "$1" | tr '.' '/'
+}
+
+create_python_inits() {
+    local deep_path="${1}"
+    local start_dir="$(pwd)"
+
+    cd "$deep_path"
+
+    while [[ "$(pwd)" != "${start_dir}" ]]; do
+        touch "__init__.py"
+        cd ..
+    done
+
+    cd "${start_dir}"
+}
+
+main() {
+    case "${LANGUAGE}" in
+        java) EXTENSION="java" ;;
+        python) EXTENSION="py" ;;
+    esac
+
+    if [[ -n "${FILE_PATH}" ]]; then
+        fs_path=$(convert_path "$FILE_PATH")
+        # Extract directory and filename
+        dir_path=$(dirname "${fs_path}")
+        filename=$(basename "${fs_path}")
+    elif [[ -n "${DIR_PATH}" ]]; then
+        fs_path=$(convert_path "${DIR_PATH}")
+        dir_path="$fs_path"
+        filename=""
+    fi
+
+    mkdir -p "$dir_path"
+
+    if [[ -n "${filename}" ]]; then
+        full_file_path="${dir_path}/${filename}.${EXTENSION}"
+        touch "${full_file_path}"
+        echo "Created file: ${full_file_path}"
+    fi
+
+    echo "Created directory: ${dir_path}"
+
+    if [[ "${LANGUAGE}" == "python" ]]; then
+        create_python_inits "${dir_path}"
+        echo "Created Python module structure with __init__.py files"
+    fi
+}
+
+while getopts "f:d:l:h" opt; do
+    case $opt in
+        f) FILE_PATH="$OPTARG" ;;
+        d) DIR_PATH="$OPTARG" ;;
+        l) LANGUAGE="$OPTARG" ;;
+        h) help ;;
+        *) usage ;;
+    esac
+done
+
+validate_arguments
+main
