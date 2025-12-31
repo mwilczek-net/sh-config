@@ -1,5 +1,22 @@
 #!/bin/bash
 
+# In case of any problem with displaying notifications, make sure that:
+# * 'Terminal' has permissions to do so.
+# * Do not disturb mode, or any other silencer are off.
+#
+# If still notifications are not displayed, try to run the osascritp commands directly form treminal to see any errors.
+#
+# But, if no errors and notifications still desn't work, then:
+# * Open "Script Editor" app.
+# * Paste `display notification "Hello from editor" with title "Hello!"`.
+# * Run it (not debug, just run).
+# MacOS should ask you for permissions for "Script Editor" to display notifications. Then it should work from terminal as well.
+# https://forum.latenightsw.com/t/trying-to-use-terminal-for-display-notification/5068?u=dirk
+#
+# Sometimes notifiaction can be broken. To fix, first restart computer.
+# If it doesn't help, try to reset notification settings:
+# delete "~/Library/Group Containers/group.com.apple.usernotifications/"
+
 status_code_input="${1}"
 
 message_title="Infrom Script"
