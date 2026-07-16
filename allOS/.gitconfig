@@ -17,6 +17,8 @@
 	ls-skip-worktree = "!f() { git ls-files -v | grep '^S'; }; f"
 	ls-assume-unchanged = "!f() { git ls-files -v | grep '^h'; }; f"
 	current-branch = "symbolic-ref --short HEAD"
+	checkout-history-unique = "!f() { git reflog | awk '/checkout: moving from/ && !seen[$NF]++ {print $NF}'; }; f"
+	checkout-history = "!f() { git reflog | awk '/checkout: moving from/ {print $NF}'; }; f"
 
 [push]
 	default = current
@@ -30,4 +32,3 @@
 
 [init]
 	defaultBranch = master
-
